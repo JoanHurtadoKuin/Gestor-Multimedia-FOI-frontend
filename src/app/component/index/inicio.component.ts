@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, NgModule, OnInit } from '@angular/core';
+import { Archivos } from 'src/app/models/archivos';
 import { Carpetas } from 'src/app/models/carpetas';
+import { ArchivosService } from 'src/app/services/archivos.service';
 import { CarpetasService } from 'src/app/services/carpetas.service';
 
 @Component({
@@ -10,11 +12,20 @@ import { CarpetasService } from 'src/app/services/carpetas.service';
 export class InicioComponent implements OnInit {
 
   carpetas?:Carpetas[];
+  archivos?:Archivos[];
 
-  constructor(private carpetasService: CarpetasService) { }
+ idCarpeta:any = 0;
+
+  constructor(private carpetasService: CarpetasService, private archivosService: ArchivosService) { }
 
   ngOnInit(): void {
     this.getAllCarpetas();
+    this.getAllArchivos();
+
+  }
+
+  agregarArchivo():void{
+    //this.archivosService.create();
   }
 
      // Get list
@@ -27,6 +38,23 @@ export class InicioComponent implements OnInit {
           (error: any) => {
             console.log(error);
           });
+    }
+
+    getAllArchivos(): void {
+      this.archivosService.list()
+        .subscribe(
+          (archivos: any) => {
+            this.archivos = archivos;
+          },
+          (error: any) => {
+            console.log(error);
+          });
+    }
+
+
+       mostrarFicherosCarpeta(idCarpeta:any):void  {
+      this.idCarpeta = idCarpeta;
+      console.log(this.idCarpeta);
     }
 
 }
