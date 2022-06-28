@@ -63,3 +63,7 @@ main {
 
   overflow-y: auto;
 }
+
+.tipo-letras{
+  font-family: "Constantia", serif;
+}
